@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -67,7 +69,18 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var sum = 0
+    var m = n
+    if (m != 0) {
+        while (m != 0) {
+            m /= 10
+            sum += 1
+        }
+    } else sum = 1
+    return sum
+
+}
 
 /**
  * Простая
@@ -75,7 +88,20 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var m = 0 //koresh
+    var f = 1 //krepkii po klichke "to pay respect"
+    var s = 0 //drish
+    var h = 0 //kachegar
+    while (h != n) {
+        s = m + f
+        f = m
+        m = s
+        h += 1
+    }
+    return s
+
+}
 
 /**
  * Простая
@@ -83,7 +109,16 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = m * n //gopa kvartiri
+    var f = m
+    var s = n
+    while (s != f) {
+        if (s > f) s -= f else f -= s
+    }
+    return (k / s)
+
+}
 
 /**
  * Простая
@@ -196,7 +231,17 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var h = 1
+    var k = 0
+    while (k < n) {
+        k += digitNumber(sqr(h))
+        h += 1
+    }
+    return (sqr(h - 1) / 10.0.pow(k - n) % 10).toInt()
+
+
+}
 
 /**
  * Сложная
@@ -207,4 +252,14 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var h = 1
+    var k = 0
+    while (k < n) {
+        k += digitNumber(fib(h))
+        h += 1
+    }
+    return (fib(h - 1) / 10.0.pow(k - n) % 10).toInt()
+}
+
+
