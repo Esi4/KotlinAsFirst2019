@@ -60,7 +60,8 @@ fun main() {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int):
-        Int = hours * 3600 + minutes * 60 + seconds
+        Int =
+    hours * 3600 + minutes * 60 + seconds
 
 /**
  * Тривиальная
@@ -79,7 +80,8 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int):
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: Int):
-        Double = (min * PI/180/60 ) + (sec * PI/180/3600)+ (PI/180* deg)
+        Double =
+    (min * PI / 180 / 60) + (sec * PI / 180 / 3600) + (PI / 180 * deg)
 
 /**
  * Тривиальная
@@ -88,7 +90,8 @@ fun angleInRadian(deg: Int, min: Int, sec: Int):
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double):
-        Double = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1) * (y2-y1)))
+        Double =
+    sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 
 /**
  * Простая
@@ -97,7 +100,8 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double):
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
 fun thirdDigit(number: Int):
-        Int = number / 100 % 10
+        Int =
+    number / 100 % 10
 
 /**
  * Простая
@@ -107,7 +111,8 @@ fun thirdDigit(number: Int):
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int):
-        Int =((hoursArrive * 60) + minutesArrive) - ((hoursDepart * 60) + minutesDepart)
+        Int =
+    ((hoursArrive * 60) + minutesArrive) - ((hoursDepart * 60) + minutesDepart)
 
 /**
  * Простая
@@ -117,10 +122,9 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int):
-
         Double {
-    var x : Double = 1 + percent * 0.01
-   return( initial * x * x * x)
+    var x: Double = 1 + percent * 0.01
+    return (initial * x * x * x)
 
 }
 
@@ -130,4 +134,4 @@ fun accountInThreeYears(initial: Int, percent: Int):
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int =((number % 10)*100) + (((number % 100) / 10) * 10) + (number/100)
+fun numberRevert(number: Int): Int = ((number % 10) * 100) + (((number % 100) / 10) * 10) + (number / 100)
