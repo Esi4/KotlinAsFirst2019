@@ -89,10 +89,10 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var m = 0 //koresh
-    var f = 1 //krepkii po klichke "to pay respect"
-    var s = 0 //drish
-    var h = 0 //kachegar
+    var m = 0
+    var f = 1
+    var s = 0
+    var h = 0
     while (h != n) {
         s = m + f
         f = m
@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = m * n //gopa kvartiri
+    var k = m * n
     var f = m
     var s = n
     while (s != f) {

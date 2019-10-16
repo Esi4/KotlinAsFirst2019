@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package lesson2.task1
+package lesson2
 
 import lesson1.task1.discriminant
 import kotlin.math.abs
@@ -66,15 +66,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    var n = age
-    var result: String
-    when {
-        (n % 100 >= 5) and (n % 100 <= 20) -> result = "$age лет"
-        (n % 10 == 1) -> result = "$age год"
-        ((n % 10 == 2) or (n % 10 == 3) or (n % 10 == 4)) -> result = "$age года"
-        else -> result = "$age лет"
+    return when {
+        (age % 100 >= 5) and (age % 100 <= 20) -> "$age лет"
+        (age % 10 == 1) -> "$age год"
+        ((age % 10 == 2) or (age % 10 == 3) or (age % 10 == 4)) -> "$age года"
+        else -> "$age лет"
     }
-    return result
+
 }
 
 /**
@@ -97,9 +95,9 @@ fun timeForHalfWay(
     return when {
         s == s1 -> t1
         (s < s1) -> s / v1
-        (s > s1) and (s < s2 + s1) -> t1 + ((s - s1) / v2)
+        (s > s1) && (s < s2 + s1) -> t1 + ((s - s1) / v2)
         (s == s1 + s2) -> t1 + t2
-        (s > s2 + s1) and (s < s3 + s2 + s1) -> t1 + t2 + ((s - s2 - s1) / v3)
+        (s > s2 + s1) && (s < s3 + s2 + s1) -> t1 + t2 + ((s - s2 - s1) / v3)
         else -> t1 + t2 + t3
 
     }
@@ -119,12 +117,13 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int = when {
-    ((kingX == rookX1) or (kingY == rookY1)) and ((kingX == rookX2) or (kingY == rookY2)) -> 3
-    (kingX == rookX1) or (kingY == rookY1) -> 1
-    (kingX == rookX2) or (kingY == rookY2) -> 2
+    ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
+    (kingX == rookX1) || (kingY == rookY1) -> 1
+    (kingX == rookX2) || (kingY == rookY2) -> 2
     else -> 0
 
 }
+
 
 /**
  * Простая
@@ -141,8 +140,8 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = when {
-    ((kingX == rookX) or (kingY == rookY)) and (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
-    (kingX == rookX) or (kingY == rookY) -> 1
+    ((kingX == rookX) || (kingY == rookY)) && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
+    (kingX == rookX) || (kingY == rookY) -> 1
     (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 2
     else -> 0
 }
@@ -156,9 +155,9 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int = when {
-    (c >= a + b) or (a >= b + c) or (b >= a + c) -> -1
-    (c * c == a * a + b * b) or (a * a == b * b + c * c) or (b * b == a * a + c * c) -> 1
-    (c * c < a * a + b * b) and (a * a < b * b + c * c) and (b * b < a * a + c * c) -> 0
+    (c >= a + b) || (a >= b + c) || (b >= a + c) -> -1
+    (c * c == a * a + b * b) || (a * a == b * b + c * c) || (b * b == a * a + c * c) -> 1
+    (c * c < a * a + b * b) && (a * a < b * b + c * c) && (b * b < a * a + c * c) -> 0
     else -> 2
 
 
