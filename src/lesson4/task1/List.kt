@@ -193,7 +193,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
     }
     return list
 }
-
+//
 /**
  * Средняя
  *
