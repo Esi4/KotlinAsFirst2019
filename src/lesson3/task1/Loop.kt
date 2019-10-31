@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = m * n
+    val k = m * n
     var f = m
     var s = n
     while (s != f) {
