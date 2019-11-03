@@ -198,7 +198,11 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    val z = stuff.map { (k, v) -> v.first to (k to v.second) }.groupBy({ it.first }, { it.second })
+    val y = z[kind] ?: return null
+    return y.minBy { it.second }?.first
+}
 
 /**
  * Средняя
@@ -209,7 +213,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val setWord = word.map { it.toLowerCase() }.toSet()
+    val setChar = chars.map { it.toLowerCase() }.toSet()
+    return setWord.subtract(setChar).isEmpty()
+}
 
 /**
  * Средняя
@@ -223,7 +231,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> =
+    list.groupBy { i -> i }.filter { (_, value) -> value.size >= 2 }.map { (key, value) ->
+        key to value.size
+    }.toMap()
 
 /**
  * Средняя
@@ -234,7 +245,12 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    val list = words.groupBy { it.map { i -> i.toLowerCase() }.sorted().toString() }
+        .filter { (_, value) -> value.size > 1 }
+    return list.isNotEmpty()
+}
+
 
 /**
  * Сложная
