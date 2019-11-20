@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -69,7 +71,30 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+)
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    val day = parts[0].toInt()
+    val month = months.indexOf(parts[1]) + 1
+    val year = parts[2].toInt()
+    if (month !in 1..12 || daysInMonth(month, year) < day) return ""
+
+    return String.format("%02d.%02d.%d", day, month, year)
+}
 
 /**
  * Средняя
@@ -81,7 +106,20 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    val unnumber = digital.matches(Regex("""\d+\.\d+\.\d+"""))
+    if (!unnumber) return ""
+    val day = parts[0].toInt()
+    val monthNumber = parts[1].toInt()
+    if (monthNumber !in 1..12) return ""
+    val month = months[monthNumber - 1]
+    val year = parts[2].toInt()
+
+    if (daysInMonth(monthNumber, year) < day) return ""
+    return String.format("%d %s %d", day, month, year)
+}
 
 /**
  * Средняя
@@ -97,7 +135,15 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if (!phone.matches(Regex("""([\s\-+\d]*(\([\s\-+\d]*\d+[\s\-+\d]*\))?[\s\-+\d]*)""")))
+        return ""
+    var noSimvol = phone.replace(Regex("""[\-\s()]"""), "")
+    val prefix = if (noSimvol.replace(Regex("""[+]"""), "").isNotEmpty() && noSimvol[0] == '+') "+" else ""
+    noSimvol = noSimvol.replace(Regex("""[+]"""), "")
+
+    return String.format("%s%s", prefix, noSimvol)
+}
 
 /**
  * Средняя

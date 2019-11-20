@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+
 
 /**
  * Пример
@@ -276,7 +278,7 @@ fun hasAnagrams(words: List<String>): Boolean {
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> =TODO()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 
 /**
  * Сложная
@@ -318,4 +320,29 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val treasuresL = treasures.toList()
+    val x = treasuresL.size
+    val bp: Array<IntArray> = Array(capacity + 1) { IntArray(x + 1) }
+    val result = mutableSetOf<String>()
+
+    for (f in 1..x) {
+        for (w in 1..capacity) {
+            if (treasuresL[f - 1].second.first <= w) {
+                bp[w][f] = max(
+                    bp[w][f - 1], bp[w - treasuresL[f - 1].second.first][f - 1] + treasuresL[f - 1].second.second
+                )
+            } else {
+                bp[w][f] = bp[w][f - 1]
+            }
+        }
+    }
+    var k = capacity
+    for (i in x downTo 1)
+        if (bp[k][i] != bp[k][i - 1]) {
+            result += treasuresL[i - 1].first
+            k -= treasuresL[i - 1].second.first
+
+        }
+    return result
+}
