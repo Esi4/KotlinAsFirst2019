@@ -85,6 +85,7 @@ val months = listOf(
     "ноября",
     "декабря"
 )
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
@@ -155,7 +156,13 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    if (!jumps.matches(Regex("""((\d+|%|-)\s)*(\d+|%|-)""")))
+        return -1
+    val c = ("""(\d+)""").toRegex().findAll(jumps)
+    val result = c.map { it.value.toInt() }.max()
+    return result ?: -1
+}
 
 /**
  * Сложная
@@ -168,7 +175,14 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches(Regex("""((\d+\s)([%+\-])+\s)*(\d+\s)([%+\-])+""")))
+        return -1
+    val j = jumps.replace(Regex("""[\-%]"""), "")
+    val x = ("""(\d+\s\+)""").toRegex().findAll(j)
+    val result = x.map { it.value.filter { i -> (i in '0'..'9') } }.map { it.toInt() }.max()
+    return result ?: -1
+}
 
 /**
  * Сложная
@@ -190,7 +204,15 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val str = str.toLowerCase().split(" ")
+    var schet = 0
+    for (i in 0 until str.size - 1) {
+        if (str[i] == str[i + 1]) return schet
+        schet += str[i].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -203,7 +225,13 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    if (!description.matches(Regex("""((\S+\s(\d+(.\d+)?));\s)*(\S+\s(\d+(.\d+)?))""")))
+        return ""
+    val z = description.split("; ").map { it.split(" ") }
+    val result = z.maxBy { (_, x) -> x.toDouble() }
+    return result?.get(0).toString()
+}
 
 /**
  * Сложная
@@ -216,7 +244,36 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+val romanNumber: Map<Char, Int> = mapOf(
+    'I' to 1,
+    'X' to 10,
+    'C' to 100,
+    'M' to 1000,
+    'V' to 5,
+    'L' to 50,
+    'D' to 500
+)
+
+fun fromRoman(roman: String): Int {
+    if (!roman.matches(Regex("""M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})""")))
+        return -1
+    if (roman.isEmpty())
+        return -1
+    var x = roman.length - 1
+    var result = 0
+    var ln = 0
+    for (i in x downTo 0) {
+        val f = romanNumber[roman[i]]
+        if (f != null) {
+            result = if (f < ln) result - f
+            else result + f
+            ln = f
+        }
+    }
+    return result
+}
+
+
 
 /**
  * Очень сложная
