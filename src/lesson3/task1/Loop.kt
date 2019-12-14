@@ -90,16 +90,16 @@ fun digitNumber(n: Int): Int {
  */
 fun fib(n: Int): Int {
     var m = 0
-    var f = 1
-    var s = 0
-    var h = 0
-    while (h != n) {
-        s = m + f
-        f = m
-        m = s
-        h += 1
+    var helpval = 1
+    var result = 0
+    var schetchik = 0
+    while (schetchik != n) {
+        result = m + helpval
+        helpval = m
+        m = result
+        schetchik += 1
     }
-    return s
+    return result
 
 }
 

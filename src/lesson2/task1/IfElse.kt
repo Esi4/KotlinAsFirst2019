@@ -113,15 +113,14 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ) {
-    val x = kingX == rookX1
-    val z = kingX == rookX2
-    val y = kingY == rookY1
-    val f = kingX == rookX2
-    val t = kingY == rookY2
+    val ugrozaotrook1 = kingX == rookX1
+    val ugrozaotrook2 = kingX == rookX2
+    val ugrozaotrook3 = kingY == rookY1
+    val ugrozaotrook4 = kingY == rookY2
     when {
-        ((x) || (y)) && ((f) || (t)) -> 3
-        (x) || (y) -> 1
-        (z) || (t) -> 2
+        ((ugrozaotrook1) || (ugrozaotrook3)) && ((ugrozaotrook1) || (ugrozaotrook4)) -> 3
+        (ugrozaotrook1) || (ugrozaotrook3) -> 1
+        (ugrozaotrook2) || (ugrozaotrook4) -> 2
         else -> 0
 
     }
@@ -143,13 +142,13 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ) {
-    val x = kingX == rookX
-    val y = kingY == rookY
+    val ugrozaotrook1 = kingX == rookX
+    val ugrozaotrook2 = kingY == rookY
     val g = kingX - bishopX
     val h = kingY - bishopY
     when {
-        ((x) || (y)) || (abs(g) == abs(h)) -> 3
-        (x) || (y) -> 1
+        ((ugrozaotrook1) || (ugrozaotrook2)) || (abs(g) == abs(h)) -> 3
+        (ugrozaotrook1) || (ugrozaotrook2) -> 1
         (abs(g) == abs(h)) -> 2
         else -> 0
     }
@@ -167,11 +166,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val maxside = maxOf(a, b, c)
     val minside = minOf(a, b, c)
     val side = a + b + c - maxside - minside
-    if (maxside >= minside + side) return -1
-    if (maxside * maxside == minside * minside + side * side) return 1
-    return if (maxside < minside + side) 0
-    else 2
-
+    return when {
+        (maxside >= minside + side) -> -1
+        (maxside * maxside == minside * minside + side * side) -> 1
+        (maxside < minside + side) -> 0
+        else -> 2
+    }
 
 }
 
