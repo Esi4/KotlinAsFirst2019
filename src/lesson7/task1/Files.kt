@@ -3,6 +3,8 @@
 package lesson7.task1
 
 import java.io.File
+import ru.spbstu.wheels.toMap
+
 
 /**
  * Пример
@@ -83,7 +85,7 @@ fun sibilants(inputName: String, outputName: String) {
     val correct = ("""(?<=[ЖжЧчШшЩщ])[ЫыЯяЮю]""").toRegex()
     val z = File(inputName)
     val w = File(outputName).bufferedWriter()
-    val s = z.readText().replace(correct) {m -> maprep.getValue(m.value) }
+    val s = z.readText().replace(correct) { m -> maprep.getValue(m.value) }
     w.write(s)
     w.close()
 }
@@ -106,8 +108,31 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    var length = 0
+
+    for (line in File(inputName).readLines()) {
+        val x = line.trim()
+        if (x.length > length)
+            length = x.length
+    }
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            val y = line.trim()
+            var size = length / 2 - y.length / 2
+            val result = when {
+                y.length % 2 == length % 2 ->
+                    " ".repeat(size) + y
+                else -> {
+                    size = length / 2 - (y.length + 1) / 2
+                    " ".repeat(size) + y
+                }
+            }
+            it.write(result)
+            it.newLine()
+        }
+    }
 }
+
 
 /**
  * Сложная
@@ -137,7 +162,45 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    var maxLength = 0
+
+    for (line in File(inputName).readLines()) {
+        val str = line.replace("""\s+""".toRegex(), " ").trim()
+        if (str.length > maxLength)
+            maxLength = str.length
+    }
+
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            var newLine = line.replace("""\s+""".toRegex(), " ").trim()
+            val currentLength = newLine.length
+            val listOfWords = listOf<String>().toMutableList()
+
+            if (currentLength != maxLength) {
+
+                for (word in newLine.split(" ")) {
+                    listOfWords.add(word)
+                }
+                val size = listOfWords.size
+
+                if (size < 2)
+                    newLine = listOfWords[0]
+                else {
+                    newLine = ""
+                    val numberOfSpaces = (maxLength - currentLength) / (size - 1) + 1
+                    val exception = (maxLength - currentLength) % (size - 1)
+                    newLine += listOfWords[0]
+                    for (i in 1 until size) {
+                        newLine += if (i <= exception) {
+                            " ".repeat(numberOfSpaces + 1) + listOfWords[i]
+                        } else " ".repeat(numberOfSpaces) + listOfWords[i]
+                    }
+                }
+            }
+            it.write(newLine)
+            it.newLine()
+        }
+    }
 }
 
 /**
@@ -158,7 +221,23 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+
+    val result = mutableMapOf<String, Int>()
+    for (line in File(inputName).readLines()) {
+        if (line.isNotEmpty()) {
+            (Regex("""[^A-zА-яёЁ]+""")).split(line).filter { it.isNotEmpty() }
+                .map { it.toLowerCase() }.forEach {
+                    if (it in result.keys) {
+                        result[it] = result[it]!! + 1
+                    } else {
+                        result[it] = 1
+                    }
+                }
+        }
+    }
+    return result.entries.sortedByDescending { (_, value) -> value }.take(20).toMap()
+}
 
 /**
  * Средняя
