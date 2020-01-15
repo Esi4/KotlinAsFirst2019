@@ -92,12 +92,12 @@ fun fib(n: Int): Int {
     var m = 0
     var helpval = 1
     var result = 0
-    var schetchik = 0
-    while (schetchik != n) {
+    var counter = 0
+    while (counter != n) {
         result = m + helpval
         helpval = m
         m = result
-        schetchik += 1
+        counter += 1
     }
     return result
 

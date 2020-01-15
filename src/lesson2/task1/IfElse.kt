@@ -113,14 +113,15 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ) {
-    val ugrozaotrook1 = kingX == rookX1
-    val ugrozaotrook2 = kingX == rookX2
-    val ugrozaotrook3 = kingY == rookY1
-    val ugrozaotrook4 = kingY == rookY2
+    val dangerrook1 = kingX == rookX1
+    val dangerrook2 = kingX == rookX2
+    val dangerrook3 = kingY == rookY1
+    val dangerrook4 = kingY == rookY2
+    val dangerrook1or3 = (dangerrook1) || (dangerrook3)
     when {
-        ((ugrozaotrook1) || (ugrozaotrook3)) && ((ugrozaotrook1) || (ugrozaotrook4)) -> 3
-        (ugrozaotrook1) || (ugrozaotrook3) -> 1
-        (ugrozaotrook2) || (ugrozaotrook4) -> 2
+        (dangerrook1or3) && ((dangerrook1) || (dangerrook4)) -> 3 //я не понимаю, как можно написать решение данной задачи, не вычисляя  dangerrook1or3 два раза, ведь нам надо проверить два случая где учавствует данная связка.
+        dangerrook1or3 -> 1
+        (dangerrook2) || (dangerrook4) -> 2
         else -> 0
 
     }
@@ -142,13 +143,13 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ) {
-    val ugrozaotrook1 = kingX == rookX
-    val ugrozaotrook2 = kingY == rookY
+    val dangerrook1 = kingX == rookX
+    val dangerrook2 = kingY == rookY
     val g = kingX - bishopX
     val h = kingY - bishopY
     when {
-        ((ugrozaotrook1) || (ugrozaotrook2)) || (abs(g) == abs(h)) -> 3
-        (ugrozaotrook1) || (ugrozaotrook2) -> 1
+        ((dangerrook1) || (dangerrook2)) || (abs(g) == abs(h)) -> 3
+        (dangerrook1) || (dangerrook2) -> 1
         (abs(g) == abs(h)) -> 2
         else -> 0
     }
@@ -163,13 +164,13 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val maxside = maxOf(a, b, c)
-    val minside = minOf(a, b, c)
-    val side = a + b + c - maxside - minside
+    val maxSide = maxOf(a, b, c)
+    val minSide = minOf(a, b, c)
+    val side = a + b + c - maxSide - minSide
     return when {
-        (maxside >= minside + side) -> -1
-        (maxside * maxside == minside * minside + side * side) -> 1
-        (maxside < minside + side) -> 0
+        (maxSide >= minSide + side) -> -1
+        (maxSide * maxSide == minSide * minSide + side * side) -> 1
+        (maxSide < minSide + side) -> 0
         else -> 2
     }
 

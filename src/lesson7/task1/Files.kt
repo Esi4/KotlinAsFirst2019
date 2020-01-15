@@ -84,10 +84,8 @@ val maprep = mapOf(
 fun sibilants(inputName: String, outputName: String) {
     val correct = ("""(?<=[ЖжЧчШшЩщ])[ЫыЯяЮю]""").toRegex()
     val z = File(inputName)
-    val w = File(outputName).bufferedWriter()
     val s = z.readText().replace(correct) { m -> maprep.getValue(m.value) }
-    w.write(s)
-    w.close()
+    File(outputName).writeText(s)
 }
 
 /**

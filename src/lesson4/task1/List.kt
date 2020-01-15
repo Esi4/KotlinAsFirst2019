@@ -170,12 +170,12 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int {
-    var d = 0
-    for (i in p.indices) {
-        d += p[i] * x.toDouble().pow(i).toInt()
+    var result = 0
+    for (i in 0 until p.size) {
+        result += p[i] * x.toDouble().pow(i).toInt()
 
     }
-    return d
+    return result
 }
 
 /**
@@ -239,7 +239,7 @@ fun convert(n: Int, base: Int): List<Int> {
         result.add(0, x % base)
         x /= base
     }
-    if (n == 0 || x != 0) result.add(0, x)
+    if (x != 0 || result.isEmpty()) result.add(0, x)
     return (result)
 }
 
@@ -256,7 +256,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    var answer = String() 
+    var answer = String()
     val list = convert(n, base)
     for (element in list) {
         if (element > 9) {
@@ -276,7 +276,7 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var x = 0
-    for (i in digits.indices) {
+    for (i in 0 until digits.size) {
         x += digits[i] * base.toDouble().pow(digits.size - i - 1).toInt()
     }
     return x

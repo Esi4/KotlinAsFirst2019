@@ -259,10 +259,9 @@ fun fromRoman(roman: String): Int {
         return -1
     if (roman.isEmpty())
         return -1
-    var x = roman.length - 1
     var result = 0
     var ln = 0
-    for (i in x downTo 0) {
+    for (i in roman.length - 1 downTo 0) {
         val f = romanNumber[roman[i]]
         if (f != null) {
             result = if (f < ln) result - f
