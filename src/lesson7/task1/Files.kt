@@ -82,11 +82,13 @@ val maprep = mapOf(
 )
 
 fun sibilants(inputName: String, outputName: String) {
-    val correct = ("""(?<=[ЖжЧчШшЩщ])[ЫыЯяЮю]""").toRegex()
-    val z = File(inputName)
-    val s = z.readText().replace(correct) { m -> maprep.getValue(m.value) }
-    File(outputName).writeText(s)
+    File(outputName).writeText(File(inputName).readText().replace(("""(?<=[ЖжЧчШшЩщ])[ЫыЯяЮю]""").toRegex()) { m ->
+        maprep.getValue(
+            m.value
+        )
+    })
 }
+
 
 /**
  * Средняя
