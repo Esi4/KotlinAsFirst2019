@@ -72,7 +72,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 
-val maprep = mapOf(
+val maprep = mapOf( //заводим мап
     "ы" to "и",
     "Ы" to "И",
     "я" to "а",
@@ -85,7 +85,7 @@ fun sibilants(inputName: String, outputName: String) {
     File(outputName).writeText(File(inputName).readText().replace(("""(?<=[ЖжЧчШшЩщ])[ЫыЯяЮю]""").toRegex()) { m ->
         maprep.getValue(
             m.value
-        )
+        )  //Записываем в выходной файл текст, где находим нужные нам эл-ты входного текста, а именно буквы ЫыЯяЮю и заменяем их
     })
 }
 
@@ -108,21 +108,21 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    var length = 0
+    var length = 0 //переменная "длина"
 
-    for (line in File(inputName).readLines()) {
-        val x = line.trim()
-        if (x.length > length)
+    for (line in File(inputName).readLines()) { //цикл где line - строка во входном файле
+        val x = line.trim()  //обрезаем ведущие конечные символы, соотв-ие предиакту
+        if (x.length > length)  //если длина символов х больше, чем пер-ая length, то приравниваем к ней кол-во значений х, т.е находим самую длинную строку(точнее её кол-во символов)
             length = x.length
     }
     File(outputName).bufferedWriter().use {
-        for (line in File(inputName).readLines()) {
-            val y = line.trim()
-            var size = length / 2 - y.length / 2
+        for (line in File(inputName).readLines()) {   //создаем объект для записи во входной файл и в него помещаем цикл, где line строка во входном файле
+            val y = line.trim()   //обрезаем ведущие конечные символы, соотв-ие предиакту
+            var size = length / 2 - y.length / 2   //записываем в пер-ую size среднее значение длины строк
             val result = when {
                 y.length % 2 == length % 2 ->
-                    " ".repeat(size) + y
-                else -> {
+                    " ".repeat(size) + y //цикл, в котором при четности длины строки равной четности длины самой большой строки в размер добавляется пробел
+                else -> { //иначе
                     size = length / 2 - (y.length + 1) / 2
                     " ".repeat(size) + y
                 }

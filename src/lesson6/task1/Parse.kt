@@ -71,7 +71,7 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-val months = listOf(
+val months = listOf(  //заводим лист с месяцами
     "января",
     "февраля",
     "марта",
@@ -87,14 +87,14 @@ val months = listOf(
 )
 
 fun dateStrToDigit(str: String): String {
-    val parts = str.split(" ")
-    if (parts.size != 3) return ""
-    val day = parts[0].toInt()
-    val month = months.indexOf(parts[1]) + 1
-    val year = parts[2].toInt()
-    if (month !in 1..12 || daysInMonth(month, year) < day) return ""
+    val parts = str.split(" ")  //получаем строку значений с элементами, разделенными пробелом (т.е 30, июнь, 2009
+    if (parts.size != 3) return "" //если этих значений НЕ 3, то возвращаем пустую строку
+    val day = parts[0].toInt()     //переводим нулевое значение(т.е дни) из строчки в число( было "30" стало 30)
+    val month = months.indexOf(parts[1]) + 1 //находим в листе с месяцами нужный нам месяц и по порядковому номеру в этом самом листе мы и получаем месяц в числе(не забыв добавить +1)
+    val year = parts[2].toInt()    //преобразуем строку с годом в число (как с днями)
+    if (month !in 1..12 || daysInMonth(month, year) < day) return ""  //выявляем ошибки(не сущ месяц,
 
-    return String.format("%02d.%02d.%d", day, month, year)
+    return String.format("%02d.%02d.%d", day, month, year)   //возвращаем строку, подогнав под нужный нам формат
 }
 
 /**
@@ -108,18 +108,18 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val parts = digital.split(".")
-    if (parts.size != 3) return ""
-    val unnumber = digital.matches(Regex("""\d+\.\d+\.\d+"""))
-    if (!unnumber) return ""
-    val day = parts[0].toInt()
-    val monthNumber = parts[1].toInt()
-    if (monthNumber !in 1..12) return ""
-    val month = months[monthNumber - 1]
-    val year = parts[2].toInt()
+    val parts = digital.split(".")  //получаем элементы, которые были разделены "."
+    if (parts.size != 3) return ""    //если этих эл-ов больше 3, возвращаем пустую строку
+    val unnumber = digital.matches(Regex("""\d+\.\d+\.\d+"""))   //проверям, соответствует ли строка данному выражению, а именно "число.число.число"
+    if (!unnumber) return ""    //возвращаем пустую строку если не соотв-ет
+    val day = parts[0].toInt() //переводим дни в число(он жи был строкой)
+    val monthNumber = parts[1].toInt()  //переводим месяц в число
+    if (monthNumber !in 1..12) return ""  //если что-то пошло не так, то швырям пустую строку
+    val month = months[monthNumber - 1] //теперь из листа с месяцами(см.выше) мы находим нужный(по номеру индекса) и вытаскиваем его значение
+    val year = parts[2].toInt() //ну и переводим год в число
 
-    if (daysInMonth(monthNumber, year) < day) return ""
-    return String.format("%d %s %d", day, month, year)
+    if (daysInMonth(monthNumber, year) < day) return ""  //снова же проверяем что бы все шло как надо
+    return String.format("%d %s %d", day, month, year) //ну и выводим формат
 }
 
 /**
@@ -137,13 +137,13 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    if (!phone.matches(Regex("""([\s\-+\d]*(\([\s\-+\d]*\d+[\s\-+\d]*\))?[\s\-+\d]*)""")))
+    if (!phone.matches(Regex("""([\s\-+\d]*(\([\s\-+\d]*\d+[\s\-+\d]*\))?[\s\-+\d]*)""")))  //проверяем на соотв-ие номер телефона
         return ""
-    var noSimvol = phone.replace(Regex("""[\-\s()]"""), "")
-    val prefix = if (noSimvol.replace(Regex("""[+]"""), "").isNotEmpty() && noSimvol[0] == '+') "+" else ""
-    noSimvol = noSimvol.replace(Regex("""[+]"""), "")
+    var noSimvol = phone.replace(Regex("""[\-\s()]"""), "")  //убираем пробелы, черточки и прочее
+    val prefix = if (noSimvol.replace(Regex("""[+]"""), "").isNotEmpty() && noSimvol[0] == '+') "+" else ""  //если нет "+" мы его добавляем, а иначе пустая строка
+    noSimvol = noSimvol.replace(Regex("""[+]"""), "")  //
 
-    return String.format("%s%s", prefix, noSimvol)
+    return String.format("%s%s", prefix, noSimvol) //возвращаем номер тел. в нужном формате
 }
 
 /**
@@ -157,11 +157,11 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    if (!jumps.matches(Regex("""((\d+|%|-)\s)*(\d+|%|-)""")))
+    if (!jumps.matches(Regex("""((\d+|%|-)\s)*(\d+|%|-)""")))   //проверяем на соотв-ие входных даныым общим требованиям
         return -1
-    val c = ("""(\d+)""").toRegex().findAll(jumps)
-    val result = c.map { it.value.toInt() }.max()
-    return result ?: -1
+    val c = ("""(\d+)""").toRegex().findAll(jumps)  //получяем числа из этой строки
+    val result = c.map { it.value.toInt() }.max() //переводим переменную с в мап и находим там макс.значение
+    return result ?: -1   //если есть null выводим ошибку(-1)
 }
 
 /**
@@ -176,7 +176,7 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    if (!jumps.matches(Regex("""((\d+\s)([%+\-])+\s)*(\d+\s)([%+\-])+""")))
+    if (!jumps.matches(Regex("""((\d+\s)([%+\-])+\s)*(\d+\s)([%+\-])+""")))   //ну тут тоже самое что и было выше
         return -1
     val j = jumps.replace(Regex("""[\-%]"""), "")
     val x = ("""(\d+\s\+)""").toRegex().findAll(j)
@@ -205,13 +205,13 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val str = str.toLowerCase().split(" ")
-    var schet = 0
-    for (i in 0 until str.size - 1) {
-        if (str[i] == str[i + 1]) return schet
-        schet += str[i].length + 1
+    val str = str.toLowerCase().split(" ")  //получаем эл-ты слов, которые были отделены пробелом
+    var schet = 0   //заводим переменную schet
+    for (i in 0 until str.size - 1) {     //цикл
+        if (str[i] == str[i + 1]) return schet  //ищем индекс повторяющихся слов или букв
+        schet += str[i].length + 1 //если такие есть, добавляем их индекс в счетчик
     }
-    return -1
+    return -1   //если с помощью цикла мы так и не вернули счетчик(т.е повторение нет), то возвращаем "-1"
 }
 
 /**
@@ -226,11 +226,11 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    if (!description.matches(Regex("""((\S+\s(\d+(.\d+)?));\s)*(\S+\s(\d+(.\d+)?))""")))
+    if (!description.matches(Regex("""((\S+\s(\d+(.\d+)?));\s)*(\S+\s(\d+(.\d+)?))""")))   //проверяем на соотв-ие строки требованиям
         return ""
-    val z = description.split("; ").map { it.split(" ") }
-    val result = z.maxBy { (_, x) -> x.toDouble() }
-    return result?.get(0).toString()
+    val z = description.split("; ").map { it.split(" ") }  //заводим пер-ую z, где получаем мап значений, где ключ-товар, а value - цена
+    val result = z.maxBy { (_, x) -> x.toDouble() }  //из этого мапа находим максимальное value и переводим его в значение из строки в значение с "плавающей точкой"
+    return result?.get(0).toString()  //выводим результат, где находим соответсвующее значение value(t.e get)
 }
 
 /**
@@ -244,7 +244,7 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-val romanNumber: Map<Char, Int> = mapOf(
+val romanNumber: Map<Char, Int> = mapOf( //заводим мап, где каждой римской цифре(тип String) соот-ет ее значение арбаской(Int)
     'I' to 1,
     'X' to 10,
     'C' to 100,
@@ -255,21 +255,21 @@ val romanNumber: Map<Char, Int> = mapOf(
 )
 
 fun fromRoman(roman: String): Int {
-    if (!roman.matches(Regex("""M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})""")))
+    if (!roman.matches(Regex("""M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})""")))    //выявляем ошибку
         return -1
-    if (roman.isEmpty())
+    if (roman.isEmpty()) //определяем чтобы входное данное не было пустым, иначе возвращаем "-1"
         return -1
     var result = 0
     var ln = 0
-    for (i in roman.length - 1 downTo 0) {
-        val f = romanNumber[roman[i]]
-        if (f != null) {
-            result = if (f < ln) result - f
-            else result + f
+    for (i in roman.length - 1 downTo 0) {   //цикл, где i - это одна римская цифра
+        val f = romanNumber[roman[i]] //находим соотв-ие римской цифре арабской из мапа выше
+        if (f != null) { // тут все понятно
+            result = if (f < ln) result - f //По правилам перевода, если меньшая цифра стоит до большей. то её надо вычесть из больше, что мы и делаем(пример XIX)
+            else result + f //иначе просто записываем в результат
             ln = f
         }
     }
-    return result
+    return result //возвращаем результат
 }
 
 

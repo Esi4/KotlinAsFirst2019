@@ -3,6 +3,7 @@
 package lesson9.task2
 
 import lesson9.task1.Matrix
+import lesson9.task1.MatrixImpl
 import lesson9.task1.createMatrix
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
@@ -60,7 +61,32 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val newMatrix: Matrix<Int> = createMatrix(height, width, 0)
+    var i = 0
+    var k = 0
+    var p = 0
+    while (i < height * width) {
+        k++
+        for (j in k - 1..width - k) {
+            i++
+            newMatrix[k - 1, j] = p++
+        }
+        for (j in k..height - k) { //k + 1 => k - 1
+            i++
+            newMatrix[j, width - k] = p++
+        }
+        for (j in k..width - k) {
+            i++
+            newMatrix[height - k, j] = p++
+        }
+        for (j in k..height - k) {
+            i++
+            newMatrix[j, k - 1] = p++
+        }
+    }
+    return newMatrix
+}
 
 /**
  * Сложная
@@ -76,7 +102,20 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val newMatrix: Matrix<Int> = createMatrix(height, width, 0)
+    var k = 0
+    for (i in 0..width / 2) {
+        ++k
+        for (j in i..height - i) {
+            newMatrix[i, j] = k
+            newMatrix[width - i - 1, j] = k
+            newMatrix[j, i] = k
+            newMatrix[j, height - i - 1] = k
+        }
+    }
+    return newMatrix
+}
 
 /**
  * Сложная
@@ -92,6 +131,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 14 17 19 20
  */
 fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
+
 
 /**
  * Средняя
