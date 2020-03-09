@@ -144,8 +144,14 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
-
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) throw IllegalArgumentException()
+    val result = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+    for (i in 0 until matrix.height)
+        for (j in 0 until matrix.width)
+            result[j, matrix.width - (i + 1)] = matrix[i, j]
+    return result
+}
 /**
  * Сложная
  *
@@ -159,7 +165,20 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
+fun isLatinSquare(matrix: Matrix<Int>): Boolean {
+    if (matrix.width != matrix.height) return false
+    val sum = (1..matrix.height).sum()
+    for (j in 0 until matrix.height) {
+        val setRow = mutableSetOf<Int>()
+        val setColumn = mutableSetOf<Int>()
+        for (i in 0 until matrix.width) {
+            setColumn.add(matrix[i, j])
+            setRow.add(matrix[j, i])
+        }
+        if (setColumn.sum() != sum || setRow.sum() != sum) return false
+    }
+    return true
+}
 
 /**
  * Средняя
