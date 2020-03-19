@@ -65,14 +65,11 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int) {
-    var result: String = when {
-        (age % 100 >= 5) && (age % 100 <= 20) -> "$age лет"
-        (age % 10 == 1) -> "$age год"
-        ((age % 10 == 2) || (age % 10 == 3) || (age % 10 == 4)) -> "$age года"
-        else -> "$age лет"
-    }
-
+fun ageDescription(age: Int): String {
+    if ((age % 100 >= 5) && (age % 100 <= 20)) return "$age лет"
+    if (age % 10 == 1) return "$age год"
+    return if ((age % 10 == 2) || (age % 10 == 3) || (age % 10 == 4)) "$age года"
+    else "$age лет"
 }
 
 /**
@@ -112,21 +109,19 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-) {
+): Int {
     val dangerrook1 = kingX == rookX1
     val dangerrook2 = kingX == rookX2
     val dangerrook3 = kingY == rookY1
     val dangerrook4 = kingY == rookY2
     val dangerrook1or3 = (dangerrook1) || (dangerrook3)
-    when {
-        (dangerrook1or3) && ((dangerrook1) || (dangerrook4)) -> 3 //я не понимаю, как можно написать решение данной задачи, не вычисляя  dangerrook1or3 два раза, ведь нам надо проверить два случая где учавствует данная связка.
-        dangerrook1or3 -> 1
-        (dangerrook2) || (dangerrook4) -> 2
-        else -> 0
 
-    }
+    if ((dangerrook1or3) && ((dangerrook1) || (dangerrook4))) return 3
+    if (dangerrook1or3) return 1
+    return if ((dangerrook2) || (dangerrook4)) 2
+    else 0
+
 }
-
 
 /**
  * Простая
@@ -142,17 +137,15 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-) {
+): Int {
     val dangerrook1 = kingX == rookX
     val dangerrook2 = kingY == rookY
     val g = kingX - bishopX
     val h = kingY - bishopY
-    when {
-        ((dangerrook1) || (dangerrook2)) || (abs(g) == abs(h)) -> 3
-        (dangerrook1) || (dangerrook2) -> 1
-        (abs(g) == abs(h)) -> 2
-        else -> 0
-    }
+    if (((dangerrook1) || (dangerrook2)) || (abs(g) == abs(h))) return 3
+    if ((dangerrook1) || (dangerrook2)) return 1
+    return if ((abs(g) == abs(h))) 2
+    else 0
 }
 
 /**
@@ -167,13 +160,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val maxSide = maxOf(a, b, c)
     val minSide = minOf(a, b, c)
     val side = a + b + c - maxSide - minSide
-    return when {
-        (maxSide >= minSide + side) -> -1
-        (maxSide * maxSide == minSide * minSide + side * side) -> 1
-        (maxSide < minSide + side) -> 0
-        else -> 2
-    }
-
+    if ((maxSide >= minSide + side)) return -1
+    if ((maxSide * maxSide == minSide * minSide + side * side)) return 1
+    return if ((maxSide < minSide + side)) 0
+    else 2
 }
 
 /**

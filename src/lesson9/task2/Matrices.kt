@@ -152,6 +152,7 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
             result[j, matrix.width - (i + 1)] = matrix[i, j]
     return result
 }
+
 /**
  * Сложная
  *
@@ -197,7 +198,22 @@ fun isLatinSquare(matrix: Matrix<Int>): Boolean {
  *
  * 42 ===> 0
  */
-fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> {
+    val result = createMatrix(matrix.height, matrix.width, 0)
+    return if ((matrix.height == 1) && (matrix.width == 1)) result
+    else {
+        for (i in 0 until matrix.height) {
+            for (j in 0 until matrix.width) {
+                for (x in -1..i) {
+                    for (y in -1..j) {
+                        result[i, j] += matrix[x, y]
+                    }
+                }
+            }
+        }
+        result
+    }
+}
 
 /**
  * Средняя

@@ -205,14 +205,12 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    if (!isPrime(x)) {
-        for (i in 2..x) {
-            while (x % i == 0) {
-                result.add(i)
-                x /= i
-            }
+    for (i in 2..x) {
+        while (x % i == 0) {
+            result.add(i)
+            x /= i
         }
-    } else (result.add(x))
+    }
     return (result)
 }
 
@@ -235,11 +233,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var x = n
     val result = mutableListOf<Int>()
-    while (x >= base) {
+    while (x != 0) {
         result.add(0, x % base)
         x /= base
     }
-    if (x != 0 || result.isEmpty()) result.add(0, x)
     return (result)
 }
 

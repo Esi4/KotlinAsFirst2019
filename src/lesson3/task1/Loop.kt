@@ -6,6 +6,7 @@ import lesson1.task1.sqr
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+
 /**
  * Пример
  *
@@ -116,8 +117,7 @@ fun lcm(m: Int, n: Int): Int {
     while (s != f) {
         if (s > f) s -= f else f -= s
     }
-    return (k / s)
-
+    return (m / s * n)
 }
 
 /**
