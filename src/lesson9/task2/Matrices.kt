@@ -64,26 +64,26 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val newMatrix: Matrix<Int> = createMatrix(height, width, 0)
     var i = 0
-    var k = 0
+    var k = 1
     var p = 0
     while (i < height * width) {
-        k++
         for (j in k - 1..width - k) {
-            i++
             newMatrix[k - 1, j] = p++
+            i++
         }
         for (j in k..height - k) { //k + 1 => k - 1
-            i++
             newMatrix[j, width - k] = p++
+            i++
         }
         for (j in k..width - k) {
-            i++
             newMatrix[height - k, j] = p++
+            i++
         }
         for (j in k..height - k) {
-            i++
             newMatrix[j, k - 1] = p++
+            i++
         }
+        k++
     }
     return newMatrix
 }

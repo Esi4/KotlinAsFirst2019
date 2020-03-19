@@ -132,11 +132,9 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     if ((!start.inside()) || (!end.inside())) throw IllegalArgumentException()
     val x = if ((start.row % 2 == start.column % 2)) 1 else 2
     val y = if ((end.row % 2 == end.column % 2)) 1 else 2
-    return when {
-        x != y -> -1
-        (start.column != end.column) && (end.row != start.row) -> 1
-        else -> 2
-    }
+    if (x != y) return -1
+    return if ((start.column != end.column) && (end.row != start.row)) 1
+    else 2
 }
 
 /**
